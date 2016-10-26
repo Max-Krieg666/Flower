@@ -5,6 +5,7 @@
   %thead
     %tr
       %th
+      -#TODO перевести все слова во вьюхах с помощью i18n
         .fa.fa-envelope.li
           Эл. почта
       %th
@@ -29,24 +30,24 @@
         %td= user.email
         %td= user.password
         %td= user.phone_number
-        %td= user.adress
-        %td= user.role
+        %td= user.address
+        %td= user.role_view
         %td
-          = link_to user, class: "btn btn-link" do
-            =fa_icon "arrow-circle-right"
+          = link_to user, class: 'btn btn-link' do
+            = fa_icon "arrow-circle-right"
             Показать
         %td
-          = link_to edit_user_path(user), class: "btn btn-link" do
-            =fa_icon "edit"
+          = link_to edit_user_path(user), class: 'btn btn-link' do
+            = fa_icon "edit"
             Редактировать
         %td
-          = link_to user, :method => :delete, :data => { :confirm => 'Вы уверены?' }, class: "btn btn-link" do
-            =fa_icon "remove"
+          = link_to user, method: :delete, data: { confirm: 'Вы уверены?' }, class: 'btn btn-link' do
+            = fa_icon "remove"
             Удалить
 
 .br
 
-= link_to new_user_path, class: "btn btn-primary" do
-  =fa_icon "user-plus"
+= link_to new_user_path, class: 'btn btn-primary'  do
+  = fa_icon "user-plus"
   Новый пользователь
 

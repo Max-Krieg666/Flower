@@ -1,0 +1,1 @@
+<%= show_order(@current_order) if @current_order %>

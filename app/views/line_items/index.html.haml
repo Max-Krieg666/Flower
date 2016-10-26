@@ -7,14 +7,14 @@
     -@line_items.each_with_index do |line_item, i|
       .list-group-item
         .pull-right
-          %span.text-danger="#{i+1}"
+          %span.text-danger= "#{i+1}"
           \|
-          %span.text-info=line_item.product.name
+          %span.text-info= line_item.product.title
           \|
-          =line_item.quantity
+          = line_item.quantity
           &times;
-          =number_to_currency(line_item.price)
-          ="= #{number_to_currency(line_item.total_price)}"
+          = number_to_currency(line_item.price)
+          = "= #{number_to_currency(line_item.total_price)}"
           %span.btn.btn-group
             =link_to line_item_path(id: line_item.id, place: "line_items"), class: 'btn btn-default', data: {method: :delete, confirm: 'Вы уверены?'} do
               =fa_icon "minus"
@@ -29,12 +29,16 @@
 
 .br
 
-= link_to @cart, data:{method: :delete, confirm: "Вы уверены?"}, class: "btn btn-primary" do
-  =fa_icon "times-circle"
+= link_to @current_order, data: { method: :delete, confirm: "Вы точно хотите очистить корзину?" }, class: 'btn btn-primary' do
+  = fa_icon "times-circle"
   Очистить корзину
-= link_to root_path, class: "btn btn-info" do
-  =fa_icon "external-link-square"
+= link_to root_path, class: 'btn btn-info' do
+  = fa_icon "external-link-square"
   Вернуться к выбору товаров
-= link_to new_order_path, class: "btn btn-danger" do
-  =fa_icon "money"
+= link_to new_order_path, class: 'btn btn-danger' do
+  = fa_icon "money"
   Оформить заказ
+  -# TODO подумать о том,куда будет вести кнопка Оформить заказ
+  -# ведь нужна будет форма оформления!!!!!!!!!!
+  -# как варик - сделать чтобы подгружалась форма вниз
+  -# и патчем отправлять на апдейт и радоваться!

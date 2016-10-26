@@ -1,27 +1,31 @@
 class Order < ActiveRecord::Base
-  belongs_to :cart
   belongs_to :user
-  has_many :line_items, dependent: :destroy
-  scope :ordering, -> {order(created_at: :desc)}
+  has_many :line_items, -> { includes(:product).order(:created_at) }, dependent: :destroy
+  scope :ordering, -> { order(created_at: :desc) }
 
-  STATUSES=%w(Оформлен Подтверждён Отменён Доставляется Завершён) #0 1 2 3 4
-  validates :cart, presence: true
+  STATUSES = %w(Инициализация Оформлен Подтверждён Отменён Доставляется Завершён).freeze # 0 1 2 3 4 5
   validates :user, presence: true
   validates :address, presence: true
-  validates :status, presence: true, inclusion: {in: 0...STATUSES.size}
+  validates :status, presence: true, inclusion: { in: 0...STATUSES.size }
 
-  validate :check_cart
-
-  def check_cart
-    if cart && cart.line_items.blank?
-      errors.add(:cart, "Корзина пуста!")
+  def add_item(p)
+    line_item = line_items.where(product_id: p.id).first
+    unless line_item
+      line_item = self.line_items.build(product: p, quantity: 0, price: p.price)
     end
+    line_item.quantity += 1
+    line_item.save
   end
-  def add_lineitems(cart)
-    line_items=[]
-    cart.line_items.each do |l_i|
-      l_i.cart_id=nil
-      line_items << l_i
-    end
+
+  def total_line_items
+    line_items.sum(:quantity)
+  end
+
+  def total_amount
+    line_items.sum("quantity*line_items.price")
+  end
+
+  def status_view
+    STATUSES[status]
   end
 end

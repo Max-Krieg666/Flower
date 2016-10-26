@@ -1,6 +1,6 @@
 %h1 Редактирование заказа
 = form_for @order do |ord|
-  =error_messages_for(@order)
+  = error_messages_for(@order)
   -#= render 'form'
   .form-group
     = label_tag('order[user_id]', Order.human_attribute_name(:user_id))

@@ -2,11 +2,13 @@ ru:
   activerecord:
     attributes:
       product:
-        name: Название
+        title: Название
         description: Описание
         price: Цена
         weight: Вес
         image: Изображение
+        kind: Тип
+        color: Цвет
       line_item:
         product: Товар
         quantity: Количество
@@ -16,18 +18,18 @@ ru:
         password: Пароль
         password_confirmation: Подтверждение пароля
         phone_number: Телефон
-        adress: Адрес
+        address: Адрес
         role: Роль
       order:
-        cart_id: Корзина
-        user_id: Пользователь
+        user: Пользователь
         status: Статус заказа
         address: Адрес доставки
         comment: Комментарий
+        fio: ФИО
+        phone: Телефон
     models:
       product: Товар
-      cart: Корзина
-      line_item: Элемент
+      line_item: Элемент заказа
       user: Пользователь
       order: Заказ
   views:

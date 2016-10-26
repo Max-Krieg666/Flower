@@ -6,21 +6,18 @@ module OrdersHelper
   end
 
   def select_status(status, selected = nil)
-    select_tag(status, options_for_select([['Оформлен', 0], ['Подтверждён', 1],
-                                           ['Отменён', 2], ['Доставляется', 3],
-                                           ['Завершён', 4]]))
+    select_tag(status, options_for_select([['Оформлен', 1], ['Подтверждён', 2],
+                                           ['Отменён', 3], ['Доставляется', 4],
+                                           ['Завершён', 5]]))
   end
-  def status_view(status)
-    if status==0
-      "Оформлен"
-    elsif status==1
-      "Подтверждён"
-    elsif status==2
-      "Отменён"
-    elsif status==3
-       "Доставляется"
-    else
-      "Завершён"
-    end
+
+  def show_order(order)
+    render 'orders/init_order', order: order
+    text = "В корзине #{order.total_line_items} #{Russian.p(order.total_line_items, 'товар', 'товара', 'товаров')} на сумму #{number_to_currency(order.total_amount)}"
+    content_tag(:div, text, class: 'alert alert-danger', id: 'current_order')
+  end
+
+  def refresh(order)
+    "В корзине #{order.total_line_items} #{Russian.p(order.total_line_items,'товар','товара','товаров')} на сумму #{number_to_currency(order.total_amount)}"
   end
 end

@@ -1,3 +1,3 @@
-$('#current_cart').html("<%= escape_javascript refresh(@cart) %>");
-$(document).trigger "cart:update"
-alert "товар << <%=j @product.name%> >> добавлен в корзину."
+$('#current_order').html("<%= escape_javascript refresh(@current_order) %>");
+$(document).trigger "order:update"
+alert "товар << <%=j @product.title%> >> добавлен в корзину."

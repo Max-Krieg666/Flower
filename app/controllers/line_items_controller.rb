@@ -1,57 +1,49 @@
 class LineItemsController < ApplicationController
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
-  # GET /line_items
-  # GET /line_items.json
   def index
-    @line_items = @cart.line_items.all
+    @line_items = @current_order.line_items
   end
 
-  # GET /line_items/1
-  # GET /line_items/1.json
   def show
   end
 
-  # GET /line_items/new
   def new
     @line_item = LineItem.new
   end
 
-  # GET /line_items/1/edit
   def edit
   end
 
-  # POST /line_items
-  # POST /line_items.json
   def create
     case params[:place]
       when nil
         @product = Product.find(params[:product_id])
-        @cart.add_item(@product)
+        @current_order.add_item(@product)
         respond_to do |format|
           if params[:product].blank?
-            format.html{redirect_to products_path, notice: 'Товар добавлен в корзину.'}
-            format.js{}
+            format.html { redirect_to products_path, notice: 'Товар добавлен в корзину.' }
+            format.js {}
           else
-            format.html{redirect_to product_path(params[:product]), notice: 'Товар добавлен в корзину.'}
-            format.js{}
+            format.html { redirect_to product_path(params[:product]), notice: 'Товар добавлен в корзину.' }
+            format.js {}
           end
         end
-      when "cart"
+      when "order"
         set_line_item
-        @line_item.quantity+=1
+        @line_item.quantity += 1
         @line_item.save
         respond_to do |format|
-          format.html{redirect_to @cart, notice: 'Товар добавлен в корзину.'}
-          format.js{}
+          format.html { redirect_to @current_order, notice: 'Товар добавлен в корзину.' }
+          format.js {}
         end
       when "line_items"
         set_line_item
-        @line_item.quantity+=1
+        @line_item.quantity += 1
         @line_item.save
         respond_to do |format|
-          format.html{redirect_to line_items_path, notice: 'Товар добавлен в корзину.'}
-          format.js{}
+          format.html { redirect_to line_items_path, notice: 'Товар добавлен в корзину.' }
+          format.js {}
         end
     end
   end
@@ -59,16 +51,14 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
-        format.html{redirect_to @line_item, notice: 'Элемент успешно изменён.'}
-        format.js{}
+        format.html { redirect_to @line_item, notice: 'Элемент успешно изменён.' }
+        format.js {}
       else
         render :edit
       end
     end
   end
 
-  # DELETE /line_items/1
-  # DELETE /line_items/1.json
   def destroy
     if @line_item.quantity == 1
       @line_item.destroy
@@ -78,8 +68,8 @@ class LineItemsController < ApplicationController
     end
     respond_to do |format|
       case params[:place]
-        when "cart"
-          format.html{redirect_to @cart, notice: 'Товар успешно удалён.'}
+        when "order"
+          format.html{redirect_to @current_order, notice: 'Товар успешно удалён.'}
           format.js{}
         when "line_items"
           format.html{redirect_to line_items_path, notice: 'Товар успешно удалён.'}
@@ -89,13 +79,11 @@ class LineItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_line_item
       @line_item = LineItem.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def line_item_params
-      params.require(:line_item).permit(:quantity, :price, :cart_id, :product_id)
+      params.require(:line_item).permit(:quantity, :price, :order_id, :product_id)
     end
 end
