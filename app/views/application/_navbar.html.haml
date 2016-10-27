@@ -3,11 +3,13 @@
     .navbar-header
       = link_to ?#, class: 'navbar-toggle collapsed', data: { toggle: 'collapse', target:'#menu' } do
         = fa_icon 'bars'
-      = link_to 'Магазин', root_path, class: 'navbar-brand'
+      = link_to 'World Of Flower Party', root_path, class: 'navbar-brand'
     #menu.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li= link_to 'Все товары', products_path
-        %li= link_to 'Корзина', line_items_path
+        %li= link_to 'Корзина', line_items_path if @current_user.user?
+        %li= link_to 'Все заказы', orders_path if @current_user.moderator?
+        -#TODO add Мои заказы если пользователь
       %ul.nav.navbar-nav.navbar-right
         -if @current_user.blank?
           %li= link_to 'Войти', login_path

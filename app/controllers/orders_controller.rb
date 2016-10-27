@@ -3,7 +3,11 @@ class OrdersController < ApplicationController
   before_action :manager_permission
 
   def index
-    @orders = Order.ordering.page(params[:page])
+    # @orders = Order.ordering.page(params[:page])
+    @new_orders = Order.where(status: 1).ordering.page(params[:page])
+    @delivery = Order.where(status: 4).ordering.page(params[:page])
+    @completed = Order.where(status: 5).ordering.page(params[:page])
+    @cancelled = Order.where(status: 3).ordering.page(params[:page])
   end
 
   def show

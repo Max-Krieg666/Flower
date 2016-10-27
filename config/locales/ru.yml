@@ -4,8 +4,7 @@ ru:
       product:
         title: Название
         description: Описание
-        price: Цена
-        weight: Вес
+        price: Цена (за шт.)
         image: Изображение
         kind: Тип
         color: Цвет

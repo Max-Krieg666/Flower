@@ -15,8 +15,8 @@
         .fa.fa-ruble.li
           Цена
       .list-group-item
-        .fa.fa-question-circle.li
-          Вес
+        .fa.fa-paint-brush.li
+          Цвет
 
 .row
   - @products.each do |product|
@@ -32,8 +32,9 @@
           .fa.fa-ruble.li
             = number_to_currency(product.price, separator: ",", delimiter: "", format: "%n")
         .list-group-item.li
-          .fa.fa-question-circle
-          = number_to_human(product.weight, units: { unit: 'г', thousand: 'кг' })
+          .fa.fa-paint-brush
+            = product.color_name
+            .fa.fa-square{ style: "color: #{product.set_color} !important" }
         .list-group-item.li
           = link_to product, class: 'btn btn-link' do
             = fa_icon "arrow-circle-right"

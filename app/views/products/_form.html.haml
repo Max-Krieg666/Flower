@@ -22,8 +22,9 @@
           %span.input-group-addon.glyphicon.glyphicon-ruble
     .col-md-3
       .form-group
-        = f.label :weight
+        = f.label :color
+        -ary = []
+        -Product::COLORS.each_with_index { |val, ind| ary << [val, ind] }
         .input-group
-          = f.text_field :weight, class: 'form-control'
-          %span.input-group-addon г.
+          = f.select :color, options_for_select(ary, nil)
   .actions= f.submit nil, class: 'btn btn-primary'

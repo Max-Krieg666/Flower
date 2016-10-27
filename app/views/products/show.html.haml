@@ -2,7 +2,7 @@
 .page-header
   .h1= @product.title
 
-%p
+.row
   %b
   -if @product.image?
     = link_to @product.image.url do
@@ -10,16 +10,20 @@
   -else
     .li.text-danger
       Изображение отсутствует!
-%p
+%br
+.row
   %b Описание:
   = @product.description
-%p
+%br
+.row
   %b Цена:
   = number_to_currency(@product.price, unit: "\u20BD", separator: ",", delimiter: "", format: "%n %u")
-%p
-  %b Вес:
-  = @product.weight
-
+%br
+.row
+  %b Цвет:
+  = @product.color_name
+  .fa.fa-square{ style: "color: #{@product.set_color} !important" }
+%br
 = link_to line_items_path(product_id: @product.id), data: { method: :post }, class: 'btn btn-success' do
   = fa_icon "cart-plus"
   Добавить в корзину

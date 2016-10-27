@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 20161027215959) do
     t.string   "title"
     t.text     "description"
     t.decimal  "price",              precision: 15, scale: 2
-    t.integer  "weight"
     t.integer  "color"
     t.integer  "kind_id"
     t.datetime "created_at",                                  null: false

@@ -8,19 +8,19 @@ class User < ActiveRecord::Base
   has_one :order, dependent: :nullify
 
   def moderator?
-    self.role == 1 || admin?
+    role == 1 || admin?
   end
 
   def admin?
-    self.role == 2
+    role == 2
   end
 
   def user?
-    self.role == 0
+    role == 0
   end
 
   def set_default_role
-    self.role ||= 0
+    role ||= 0
   end
 
   def role_view

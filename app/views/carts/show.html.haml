@@ -42,12 +42,14 @@
               = link_to line_item_path(id: item.id, place: 'order'), class: 'btn btn-default', data: { method: :delete, confirm: 'Вы уверены?' } do
                 = fa_icon "minus"
               = link_to "#{item.quantity} шт", @current_order, class: 'btn btn-default'
-              = link_to line_items_path(id: item.id, place:"order"), class: 'btn btn-default', data: {method: :post} do
+              = link_to line_items_path(id: item.id, place: 'order'), class: 'btn btn-default', data: {method: :post} do
                 = fa_icon "plus"
         .list-group-item
-          .fa.fa-download.li
-            = number_to_human(item.product.weight*item.quantity, units: { unit: "г", thousand: "кг" })
-
+          .fa.fa-paint-brush.li
+          -#TODO подумать как красиво отображать цвет
+            = item.product.color
+-total_count = 0; total_price = 0
+-@current_order.line_items.each { |itm| total_count += itm.quantity; total_price += item.price * item.quantity }
 .row
   .col-md-4
     .list-group
@@ -60,21 +62,11 @@
         .br
         .li
           Всего товаров:
-          -sum = 0
-          -@current_order.line_items.each{ |itm| sum += itm.quantity }
-          = sum
-        .br
-        .li
-          Суммарный вес:
-          -sum = 0
-          -@current_order.line_items.each{ |item| sum += item.product.weight * item.quantity }
-          = number_to_human(sum, units: { unit: 'г', thousand: 'кг' })
+          = total_count
       .list-group-item
         .fa.fa-ruble.li
           Цена:
-        -sum = 0
-        -@current_order.line_items.each{ |item| sum += item.price*item.quantity }
-        = number_to_currency(sum, separator: ',', delimiter: '', format: '%n')
+          = total_price
 
 = link_to @current_order, data: { method: :delete, confirm: 'Вы хотите отменить заказ?' }, class: 'btn btn-primary' do
   = fa_icon "times-circle"

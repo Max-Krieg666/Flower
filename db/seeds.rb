@@ -1,4 +1,6 @@
 Kind.create(title: 'Семена')
-Kind.create(title: 'Горшковые')
+Kind.create(title: 'Штучные')
+Kind.create(title: 'Комнатные')
 Kind.create(title: 'Садовые')
 Kind.create(title: 'Букет')
+Kind.create(title: 'Другой')

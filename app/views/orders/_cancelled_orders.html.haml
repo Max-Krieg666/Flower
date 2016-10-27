@@ -1,0 +1,25 @@
+%table.table.table-bordered.table-hover.table-condensed
+  %thead
+    %tr
+      %th ID
+      %th ID пользователя
+      %th ФИО
+      %th Телефон
+      %th Адрес доставки
+      %th Статус
+      %th Комментарий
+      %th
+
+  %tbody
+    - this_orders.each do |order|
+      %tr
+        %td= order.id
+        %td= order.user_id
+        %td= order.fio
+        %td= order.phone
+        %td= order.address
+        %td= order.status_view
+        %td= order.comment
+        %td= link_to 'Показать', order
+%br
+= paginate this_orders

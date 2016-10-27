@@ -33,6 +33,5 @@
             = number_to_currency(item.price * item.quantity,
               separator: ',', delimiter: '', format: '%n')
           .list-group-item.li
-            .span.badge= number_to_human(item.product.weight*item.quantity, units: {unit: 'г', thousand: 'кг'})
-            Вес
+            .span.badge= item.color
 = link_to 'Назад', orders_path
