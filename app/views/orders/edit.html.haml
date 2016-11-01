@@ -6,11 +6,11 @@
     = label_tag('order[user_id]', Order.human_attribute_name(:user_id))
     = select_user('order[user_id]', @order.user_id)
   .form-group
-    =ord.label :comment
-    =ord.text_field :comment, class: "form-control"
+    = ord.label :comment
+    = ord.text_field :comment, class: "form-control"
   .form-group
-    =ord.label :address
-    =ord.text_field :address, class: "form-control"
+    = ord.label :address
+    = ord.text_field :address, class: "form-control"
   .form-group
     = label_tag('order[status]', Order.human_attribute_name(:keys))
     = select_status('order[status]', @order.status)

@@ -4,7 +4,6 @@ class Order < ActiveRecord::Base
   scope :ordering, -> { order(created_at: :desc) }
 
   STATUSES = %w(Инициализация Оформлен Подтверждён Отменён Доставляется Завершён).freeze # 0 1 2 3 4 5
-  validates :user, presence: true
   validates :address, presence: true
   validates :status, presence: true, inclusion: { in: 0...STATUSES.size }
 

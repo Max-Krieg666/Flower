@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   validates :image,
             attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
             attachment_size: { less_than: 1.megabytes },
-            attachment_file_name: { :matches => [/png\Z/, /jpe?g\Z/] }
+            attachment_file_name: { matches: [/png\Z/, /jpe?g\Z/] }
   validates :title, presence: true, length: { maximum: 200 }
   validates :price, presence: true, numericality: { greater_than: 0 }
 

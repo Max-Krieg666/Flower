@@ -1,41 +1,43 @@
-.br
-.page-header
-  .h1= @product.title
+.div.product-show-block.content
+  .h1.nomargin= @product.title
 
-.row
-  %b
-  -if @product.image?
-    = link_to @product.image.url do
-      = image_tag @product.image.url(:medium), alt: @product.title
-  -else
-    .li.text-danger
-      Изображение отсутствует!
-%br
-.row
-  %b Описание:
-  = @product.description
-%br
-.row
-  %b Цена:
-  = number_to_currency(@product.price, unit: "\u20BD", separator: ",", delimiter: "", format: "%n %u")
-%br
-.row
-  %b Цвет:
-  = @product.color_name
-  .fa.fa-square{ style: "color: #{@product.set_color} !important" }
-%br
-= link_to line_items_path(product_id: @product.id), data: { method: :post }, class: 'btn btn-success' do
-  = fa_icon "cart-plus"
-  Добавить в корзину
-\|
-= link_to @current_order, class: 'btn btn-info' do
-  = fa_icon "share"
-  Перейти к корзине
-\|
-= link_to edit_product_path(@product), class: 'btn btn-warning' do
-  = fa_icon "pencil"
-  Редактировать
-\|
-= link_to products_path, class: 'btn btn-primary' do
-  = fa_icon "reply"
-  Вернуться к списку товаров
+  .row.nomargin
+    %b
+    -if @product.image?
+      = link_to @product.image.url do
+        = image_tag @product.image.url(:medium), alt: @product.title
+    -else
+      .li.text-danger
+        Изображение отсутствует!
+  %br
+  .row.nomargin
+    %b Описание:
+    = @product.description
+  %br
+  .row.nomargin
+    %b Цена:
+    = number_to_currency(@product.price, unit: "\u20BD", separator: ",", delimiter: "", format: "%n %u")
+  %br
+  .row.nomargin
+    %b Цвет:
+    = @product.color_name
+    .fa.fa-square{ style: "color: #{@product.set_color} !important" }
+  %br
+  -if !@current_user || @current_user.present? && !@current_user.moderator?
+    = link_to line_items_path(product_id: @product.id), data: { method: :post }, title: 'Добавить в корзину' , class: 'btn btn-success' do
+      = fa_icon "cart-plus", class: 'fa-2x'
+    \|
+    = link_to @current_order, class: 'btn btn-info', title: 'Перейти к корзине' do
+      = fa_icon "share", class: 'fa-2x'
+  -if @current_user.present? && @current_user.moderator?
+    \|
+    = link_to edit_product_path(@product), class: 'btn btn-warning', title: 'Редактировать' do
+      = fa_icon "pencil", class: 'fa-2x'
+    \|
+    = link_to @product, method: :delete, data: { confirm: 'Вы уверены?' }, title: 'Удалить', class: 'btn btn-danger' do
+      = fa_icon "remove", class: 'fa-2x'
+  \|
+  = link_to products_path, class: 'btn btn-primary', title: 'Вернуться к списку товаров' do
+    = fa_icon "reply", class: 'fa-2x'
+.div.product-show-block.listing
+  .h1.nomargin Похожие товары

@@ -1,0 +1,35 @@
+.product-img {
+	position: relative;
+	left: 30%;
+	right: 30%;
+}
+
+.field_content {
+	text-align: center;
+}
+
+.product-show-block {
+	text-align: center;
+	border: 1px solid #333;
+	padding-bottom: 10px;
+	margin-bottom: 2%;
+}
+
+.product-show-block.content {
+	width: 60%;
+    float: left;
+}
+
+.product-show-block.listing {
+	width: 40%;
+    float: right;
+}
+
+.row.nomargin {
+	margin: 0;
+	padding-top: 5px;
+}
+
+.h1.nomargin {
+	margin: 0;
+}

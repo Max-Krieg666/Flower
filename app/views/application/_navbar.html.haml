@@ -7,8 +7,11 @@
     #menu.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li= link_to 'Все товары', products_path
-        %li= link_to 'Корзина', line_items_path if @current_user.user?
-        %li= link_to 'Все заказы', orders_path if @current_user.moderator?
+        -if @current_user.present? && @current_user.moderator?
+          %li= link_to 'Все заказы', orders_path
+        -else
+          %li= link_to 'Корзина', line_items_path 
+          -#%li= link_to 'Мои заказы', orders_path if @current_user.present?
         -#TODO add Мои заказы если пользователь
       %ul.nav.navbar-nav.navbar-right
         -if @current_user.blank?
