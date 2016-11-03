@@ -5,10 +5,12 @@ class CreateLineItems < ActiveRecord::Migration
       t.decimal :price, precision: 15, scale: 2
       t.belongs_to :order, index: true
       t.belongs_to :product, index: true
+      t.belongs_to :pack, index: true
 
       t.timestamps null: false
     end
     add_foreign_key :line_items, :orders
     add_foreign_key :line_items, :products
+    add_foreign_key :line_items, :packs
   end
 end

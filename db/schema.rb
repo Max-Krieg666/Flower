@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161027215959) do
+ActiveRecord::Schema.define(version: 20161103233710) do
 
   create_table "kinds", force: :cascade do |t|
     t.string   "title"
@@ -25,11 +25,13 @@ ActiveRecord::Schema.define(version: 20161027215959) do
     t.decimal  "price",      precision: 15, scale: 2
     t.integer  "order_id"
     t.integer  "product_id"
+    t.integer  "pack_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
 
   add_index "line_items", ["order_id"], name: "index_line_items_on_order_id"
+  add_index "line_items", ["pack_id"], name: "index_line_items_on_pack_id"
   add_index "line_items", ["product_id"], name: "index_line_items_on_product_id"
 
   create_table "orders", force: :cascade do |t|
@@ -44,6 +46,19 @@ ActiveRecord::Schema.define(version: 20161027215959) do
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
+
+  create_table "packs", force: :cascade do |t|
+    t.string   "title"
+    t.decimal  "price",              precision: 15, scale: 2
+    t.integer  "color"
+    t.text     "description"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string   "title"

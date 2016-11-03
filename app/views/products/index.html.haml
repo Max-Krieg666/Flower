@@ -26,10 +26,10 @@
         .list-group-item.li.field_content
           = link_to product, class: 'btn btn-primary', title: 'Подробнее о товаре' do
             = fa_icon "arrow-circle-right", class: 'fa-2x'
-          -if !@current_user || @current_user.present? && !@current_user.moderator?
+          -if !@current_user || @current_user && @current_user.user?
             = link_to line_items_path(product_id: product.id), class: 'btn btn-success', data: { method: :post, remote: :true }, title: 'Добавить в корзину' do
               = fa_icon "cart-plus", class: 'fa-2x'
-        -if @current_user.present? && @current_user.moderator?
+        -if @current_user && @current_user.moderator?
           .list-group-item.li.field_content
             = link_to edit_product_path(product), class: 'btn btn-warning', title: 'Редактировать' do
               = fa_icon "edit", class: 'fa-2x'
@@ -39,7 +39,7 @@
 .br
 
 -if @current_user.present? && @current_user.moderator?
-  = link_to new_product_path, class: 'btn btn-primary show_addition', data: { title: 'Новый продукт' } do
+  = link_to new_product_path, class: 'btn btn-primary show_addition', title: 'Новый продукт' do
     = fa_icon "plus", class: 'fa-2x'
 .br
 = paginate @products

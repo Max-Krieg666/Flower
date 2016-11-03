@@ -10,7 +10,6 @@
 
 .product-show-block {
 	text-align: center;
-	border: 1px solid #333;
 	padding-bottom: 10px;
 	margin-bottom: 2%;
 }
@@ -32,4 +31,32 @@
 
 .h1.nomargin {
 	margin: 0;
+}
+
+.same_product_show {
+	border: 3px ridge #333;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-radius: 10px 20px 30px 40px/30px;
+}
+
+.same_product_image_block, .same_product_info_block {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    vertical-align: top;
+    margin: 5px;
+    margin-right: 20px;
+}
+
+.same_product_info_block {
+	padding: 5%;
+}
+
+.same_product_title {
+	font-size: 20px;
+}
+
+.same_product_big_link {
+	font-size: 30px;
 }

@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @same_products = Product.where.not(id: @product.id).where(kind: @product.kind).limit(3)
   end
 
   def new
