@@ -1,5 +1,6 @@
 class LineItemsController < ApplicationController
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_current_order
 
   def index
     @line_items = @current_order.line_items
@@ -69,10 +70,10 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       case params[:place]
         when "order"
-          format.html{redirect_to @current_order, notice: 'Товар успешно удалён.'}
+          format.html{ redirect_to @current_order, notice: 'Товар успешно удалён.' }
           format.js{}
         when "line_items"
-          format.html{redirect_to line_items_path, notice: 'Товар успешно удалён.'}
+          format.html{ redirect_to line_items_path, notice: 'Товар успешно удалён.' }
           format.js{}
       end
     end

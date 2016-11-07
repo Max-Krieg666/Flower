@@ -9,9 +9,10 @@
         %li= link_to 'Все товары', products_path
         -if @current_user.present? && @current_user.moderator?
           %li= link_to 'Все заказы', orders_path
-        -else
-          %li= link_to 'Корзина', line_items_path 
-          -#%li= link_to 'Мои заказы', orders_path if @current_user.present?
+        -elsif @current_order.present?
+          %li= link_to 'Корзина', line_items_path
+        -#elsif condition
+          / %li= link_to 'Мои заказы', @current_user.orders if @current_user.present?
         -#TODO add Мои заказы если пользователь
       %ul.nav.navbar-nav.navbar-right
         -if @current_user.blank?

@@ -2,11 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  before_action :set_current_user
   before_action :set_locale
+  before_action :set_current_user
+  before_action :set_current_order
 
   protect_from_forgery with: :exception
-  before_action :set_current_order
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -15,12 +15,6 @@ class ApplicationController < ActionController::Base
   private
     def record_not_found
       render plain: '404 Not Found', status: 404
-    end
-    
-    def set_current_user
-      if session[:user_id].present?
-        @current_user = User.find(session[:user_id])
-      end
     end
 
     def require_login
@@ -43,15 +37,33 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def set_current_order
-      @current_order = Order.find(session[:order_id])
-    rescue ActiveRecord::RecordNotFound
-      @current_order = Order.create(user: @user, status: 0)
-      session[:order_id] = @current_order.id
-    end
-
     def danger
       flash[:danger] = 'Недостаточно прав'
       redirect_to root_path
+    end
+      
+    def set_current_user
+      return @current_user if @current_user
+      if session[:user_id] && user = User.find(session[:user_id])
+        @current_user = user
+        session[:user_id] = @current_user.id
+      else
+        session[:user_id] = nil
+      end
+      return @current_user
+    end
+
+    def set_current_order
+      return @current_order if @current_order
+      if @current_user
+        order = @current_user.orders.first || Order.create(user: @current_user)
+        @current_order = order
+      elsif session[:order_id]
+        @current_order = Order.find(session[:order_id]) || Order.create
+      else
+        @current_order = Order.create
+      end
+      session[:order_id] = @current_order.id
+      @current_order
     end
 end

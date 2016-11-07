@@ -74,11 +74,29 @@
 = link_to root_path, class: 'btn btn-info' do
   = fa_icon "external-link-square"
   Вернуться к выбору товаров
-= link_to new_order_path, class: 'btn btn-danger' do
+= link_to '#order_processing', class: 'btn btn-danger', data: { toggle: 'collapse' } do
   = fa_icon "money"
   Оформить заказ
-  -# TODO подумать о том,куда будет вести кнопка Оформить заказ
-  -# ведь нужна будет форма оформления!!!!!!!!!!
-  -# как варик - сделать чтобы подгружалась форма вниз
-  -# и патчем отправлять на апдейт и радоваться!
 
+.div.collapse#order_processing
+  = form_for @current_order, data: { method: :patch }, url: order_path(@current_order) do |f|
+    = error_messages_for(@current_order)
+    .row
+      .col-md-3
+        .form-group
+          = f.label :fio
+          = f.text_field :fio, class: 'form-control'
+      .col-md-3
+        .form-group
+          = f.label :address
+          = f.text_field :address, class: 'form-control'
+    .row
+      .col-md-3
+        .form-group
+          = f.label :phone
+          = f.text_field :phone, class: 'form-control'
+      .col-md-3
+        .form-group
+          = f.label :comment
+          = f.text_field :comment, class: 'form-control'
+    .actions= f.submit nil, class: 'btn btn-primary'

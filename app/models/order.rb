@@ -4,7 +4,7 @@ class Order < ActiveRecord::Base
   scope :ordering, -> { order(created_at: :desc) }
 
   STATUSES = %w(Инициализация Оформлен Подтверждён Отменён Доставляется Завершён).freeze # 0 1 2 3 4 5
-  validates :address, presence: true
+  validates_presence_of :address, if: :try_confirm
   validates :status, presence: true, inclusion: { in: 0...STATUSES.size }
 
   def add_item(p)
@@ -26,5 +26,9 @@ class Order < ActiveRecord::Base
 
   def status_view
     STATUSES[status]
+  end
+
+  def try_confirm
+    line_items.size > 0 && status == 0
   end
 end
