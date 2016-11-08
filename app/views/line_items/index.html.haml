@@ -7,7 +7,7 @@
     -@line_items.each_with_index do |line_item, i|
       .list-group-item
         .pull-right
-          %span.text-danger= "#{i+1}"
+          %span.text-danger= "#{i + 1}"
           \|
           %span.text-info= line_item.product.title
           \|
@@ -16,20 +16,15 @@
           = number_to_currency(line_item.price)
           = "= #{number_to_currency(line_item.total_price)}"
           %span.btn.btn-group
-            =link_to line_item_path(id: line_item.id, place: "line_items"), class: 'btn btn-default', data: {method: :delete, confirm: 'Вы уверены?'} do
-              =fa_icon "minus"
-            =link_to line_items_path(id: line_item.id, place: "line_items"), class: 'btn btn-default', data: {method: :post} do
-              =fa_icon "plus"
+            = link_to line_item_path(id: line_item.id, place: 'line_items'), class: 'btn btn-default', data: { method: :delete, confirm: 'Вы уверены?' } do
+              = fa_icon "minus"
+            = link_to line_items_path(id: line_item.id, place: 'line_items'), class: 'btn btn-default', data: { method: :post } do
+              = fa_icon "plus"
         .clearfix
-  -#.alert.alert-info
-    -#Всего
-    -#=@line_items.to_a.sum(&:quantity)
-    -##{Russian.p(@line_items.to_a.sum(&:quantity),'товар','товара','товаров')} на сумму
-    -#=number_to_currency @line_items.to_a.sum(&:total_price)
 
 .br
 
-= link_to @current_order, data: { method: :delete, confirm: "Вы точно хотите очистить корзину?" }, class: 'btn btn-primary' do
+= link_to @current_order, data: { method: :delete, confirm: 'Вы точно хотите очистить корзину?' }, class: 'btn btn-primary' do
   = fa_icon "times-circle"
   Очистить корзину
 = link_to root_path, class: 'btn btn-info' do
@@ -40,7 +35,7 @@
   Оформить заказ
 
 .div.collapse#order_processing
-  = form_for @current_order, data: { method: :patch }, url: order_path(@current_order), remote: true do |f|
+  = form_for @current_order, data: { method: :patch }, url: submit_order_order_path(@current_order) do |f|
     = error_messages_for(@current_order)
     .row
       .col-md-3
@@ -60,4 +55,4 @@
         .form-group
           = f.label :comment
           = f.text_field :comment, class: 'form-control'
-    .actions= f.submit nil, class: 'btn btn-primary'
+    .actions= f.submit 'Оформить заказ', class: 'btn btn-primary'

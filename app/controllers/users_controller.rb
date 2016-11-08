@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     session[:user_id] = @user.id
     if @user.save
-      redirect_to root_path, notice: 'Вы успешно зарегистрированы.'
+      redirect_to root_path, notice: I18n.t('flash_messages.user_was_registered_successfully')
     else
       render :new
     end
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'Пользователь успешно изменён.' }
+        format.html { redirect_to @user, notice: I18n.t('flash_messages.user_was_updated_successfully') }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -41,17 +41,18 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'Пользователь успешно удалён.' }
+      format.html { redirect_to users_url, notice: I18n.t('flash_messages.user_was_destroyed_successfully') }
       format.json { head :no_content }
     end
   end
 
   private
-    def set_user
-      @user = User.find(params[:id])
-    end
+  
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :phone_number, :address)
-    end
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :phone_number, :address)
+  end
 end

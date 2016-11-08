@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :require_login
-  before_action :manager_permission
+  before_action :require_login, except: [:submit_order, :destroy]
+  before_action :manager_permission, except: [:submit_order, :destroy]
 
   def index
     @new_orders = Order.where(status: 1).ordering.page(params[:page])
@@ -15,11 +15,19 @@ class OrdersController < ApplicationController
   def edit
   end
 
+  def submit_order
+    if @current_order.update(order_params)
+      redirect_to root_path, notice: I18n.t('flash_messages.order_was_issued_successfully')
+    else
+      redirect_to line_items_path, params: params
+    end
+  end
+
   def update
     respond_to do |format|
       if @current_order.update(order_params)
         @current_order.update(status: 1)
-        format.html { redirect_to @current_order, notice: 'Заказ оформлен.' }
+        format.html { redirect_to @current_order, notice: I18n.t('flash_messages.order_was_updated_successfully') }
         format.json { render :show, status: :ok, location: @current_order }
       else
         format.html { render :edit }
@@ -29,15 +37,14 @@ class OrdersController < ApplicationController
   end
 
   def destroy
+    path = !@current_user || @current_user && @current_user.user? ? root_path : orders_url
     @current_order.update(status: 3)
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Заказ отменён.' }
-      format.json { head :no_content }
-    end
+    redirect_to path, notice: I18n.t('flash_messages.order_was_canceled')
   end
 
   private
-    def order_params
-      params.require(:order).permit(:user_id, :address, :status, :comment, :fio, :phone)
-    end
+  
+  def order_params
+    params.require(:order).permit(:user_id, :address, :status, :comment, :fio, :phone)
+  end
 end

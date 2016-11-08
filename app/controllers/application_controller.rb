@@ -13,57 +13,57 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def record_not_found
-      render plain: '404 Not Found', status: 404
-    end
+  
+  def record_not_found
+    render status: 404, formats: [:html], template: 'layouts/404_error', without: :flash
+  end
 
-    def require_login
-      unless @current_user
-        # TODO перевести все мессаги с помощью i18n
-        flash[:danger] = 'Требуется авторизация'
-        redirect_to login_path
-      end
+  def require_login
+    unless @current_user
+      flash[:danger] = I18n.t('flash_messages.need_authorize')
+      redirect_to login_path
     end
+  end
 
-    def manager_permission
-      unless @current_user.try(:moderator?)
-        danger
-      end
+  def manager_permission
+    unless @current_user.try(:moderator?)
+      danger
     end
+  end
 
-    def admin_permission
-      unless @current_user.try(:admin?)
-        danger
-      end
+  def admin_permission
+    unless @current_user.try(:admin?)
+      danger
     end
+  end
 
-    def danger
-      flash[:danger] = 'Недостаточно прав'
-      redirect_to root_path
+  def danger
+    flash[:danger] = I18n.t('flash_messages.permission_denied')
+    redirect_to root_path
+  end
+    
+  def set_current_user
+    return @current_user if @current_user
+    if session[:user_id] && user = User.find(session[:user_id])
+      @current_user = user
+      session[:user_id] = @current_user.id
+    else
+      session[:user_id] = nil
     end
-      
-    def set_current_user
-      return @current_user if @current_user
-      if session[:user_id] && user = User.find(session[:user_id])
-        @current_user = user
-        session[:user_id] = @current_user.id
-      else
-        session[:user_id] = nil
-      end
-      return @current_user
-    end
+    return @current_user
+  end
 
-    def set_current_order
-      return @current_order if @current_order
-      if @current_user
-        order = @current_user.orders.first || Order.create(user: @current_user)
-        @current_order = order
-      elsif session[:order_id]
-        @current_order = Order.find(session[:order_id]) || Order.create
-      else
-        @current_order = Order.create
-      end
-      session[:order_id] = @current_order.id
-      @current_order
+  def set_current_order
+    return @current_order if @current_order
+    if @current_user
+      order = @current_user.orders.first || Order.create(user: @current_user)
+      @current_order = order
+    elsif session[:order_id]
+      @current_order = Order.find(session[:order_id]) || Order.create
+    else
+      @current_order = Order.create
     end
+    session[:order_id] = @current_order.id
+    @current_order
+  end
 end

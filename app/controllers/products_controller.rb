@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to @product, notice: 'Продукт успешно создан.'
+      redirect_to @product, notice: I18n.t('flash_messages.product_was_created_successfully')
     else
       render :new
     end
@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to @product, notice: 'Продукт успешно изменен.'
+      redirect_to @product, notice: I18n.t('flash_messages.product_was_updated_successfully')
     else
       render :edit
     end
@@ -37,15 +37,16 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_url, notice: 'Продукт успешно уничтожен.'
+    redirect_to products_url, notice: I18n.t('flash_messages.product_was_destroyed_successfully')
   end
 
   private
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
-    def product_params
-      params.require(:product).permit(:title, :image, :description, :price, :color)
-    end
+  def product_params
+    params.require(:product).permit(:title, :image, :description, :price, :color)
+  end
 end

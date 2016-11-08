@@ -1,5 +1,3 @@
--#%p#notice= notice
--# TODO разобраться с этим файлом. как , зачем, почему...
 .page-header
   .fa.fa-shopping-cart.fa-4x.li
     Ваша корзина
@@ -20,8 +18,8 @@
         .fa.fa-tags.li
           Количество
       .list-group-item
-        .fa.fa-download.li
-          Общий вес
+        .fa.fa-paint-brush.li
+          Цвет
 
 .row
   - @current_order.line_items.each do |item|
@@ -45,11 +43,11 @@
               = link_to line_items_path(id: item.id, place: 'order'), class: 'btn btn-default', data: {method: :post} do
                 = fa_icon "plus"
         .list-group-item
-          .fa.fa-paint-brush.li
-          -#TODO подумать как красиво отображать цвет
-            = item.product.color
+          .fa.fa-tags.li
+            = @product.color_name
+            .fa.fa-square{ style: "color: #{@product.set_color} !important" }
 -total_count = 0; total_price = 0
--@current_order.line_items.each { |itm| total_count += itm.quantity; total_price += item.price * item.quantity }
+-@current_order.line_items.each { |item| total_count += item.quantity; total_price += item.price * item.quantity }
 .row
   .col-md-4
     .list-group
@@ -58,7 +56,7 @@
           Итого:
       .list-group-item
         .fa.fa-info-circle.li
-          Всего товарных позиций: #{@current_order.line_items.length}
+          Всего товарных позиций: #{@current_order.line_items.size}
         .br
         .li
           Всего товаров:

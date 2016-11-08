@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'products#index'
 
-  resources :orders, except: [:create, :new]
+  resources :orders, except: [:create, :new] do
+    patch 'submit_order', on: :member
+  end
 
   resources :users
 

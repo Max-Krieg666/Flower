@@ -47,3 +47,21 @@ ru:
           other: "Отображение <b>all %{count}</b> %{entry_name}"
       more_pages:
         display_entries: "Отображение %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> из <b>%{total}</b> в общем"
+  flash_messages:
+    need_authorize: Требуется авторизация
+    permission_denied: Недостаточно прав
+    authorize_successfully: Авторизация прошла успешно
+    incorrect_email_or_password: Неверный адрес эл. почты или пароль
+    exit_successfully: Выход выполнен
+    product_added_to_cart: Товар добавлен в корзину
+    element_of_order_was_updated_successfully: Элемент заказа успешно изменён
+    element_of_order_was_destroyed_successfully: Элемент заказа успешно удалён
+    order_was_issued_successfully: Заказ успешно оформлен
+    order_was_updated_successfully: Заказ успешно изменён
+    order_was_canceled: Заказ отменён
+    product_was_created_successfully: Продукт успешно создан
+    product_was_updated_successfully: Продукт успешно изменен
+    product_was_destroyed_successfully: Продукт успешно удалён
+    user_was_registered_successfully: Вы успешно зарегистрированы
+    user_was_updated_successfully: Пользователь успешно изменён
+    user_was_destroyed_successfully: Пользователь успешно удалён
