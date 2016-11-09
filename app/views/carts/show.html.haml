@@ -44,8 +44,8 @@
                 = fa_icon "plus"
         .list-group-item
           .fa.fa-tags.li
-            = @product.color_name
-            .fa.fa-square{ style: "color: #{@product.set_color} !important" }
+            = item.product.color_name
+            .fa.fa-square{ style: "color: #{item.product.set_color} !important" }
 -total_count = 0; total_price = 0
 -@current_order.line_items.each { |item| total_count += item.quantity; total_price += item.price * item.quantity }
 .row

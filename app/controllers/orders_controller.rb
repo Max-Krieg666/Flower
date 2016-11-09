@@ -16,7 +16,8 @@ class OrdersController < ApplicationController
   end
 
   def submit_order
-    if @current_order.update(order_params)
+    if @current_order.update(order_params.merge(status: 1))
+      session.delete(:order_id)
       redirect_to root_path, notice: I18n.t('flash_messages.order_was_issued_successfully')
     else
       redirect_to line_items_path, params: params
@@ -39,6 +40,7 @@ class OrdersController < ApplicationController
   def destroy
     path = !@current_user || @current_user && @current_user.user? ? root_path : orders_url
     @current_order.update(status: 3)
+    session.delete(:order_id)
     redirect_to path, notice: I18n.t('flash_messages.order_was_canceled')
   end
 

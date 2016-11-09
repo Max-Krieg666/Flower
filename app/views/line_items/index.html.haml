@@ -3,25 +3,31 @@
 -if @line_items.blank?
   .alert.alert-info В корзине нет товаров
 -else
-  .list-group
+  .row
     -@line_items.each_with_index do |line_item, i|
-      .list-group-item
-        .pull-right
-          %span.text-danger= "#{i + 1}"
-          \|
-          %span.text-info= line_item.product.title
-          \|
-          = line_item.quantity
-          &times;
-          = number_to_currency(line_item.price)
-          = "= #{number_to_currency(line_item.total_price)}"
-          %span.btn.btn-group
-            = link_to line_item_path(id: line_item.id, place: 'line_items'), class: 'btn btn-default', data: { method: :delete, confirm: 'Вы уверены?' } do
-              = fa_icon "minus"
-            = link_to line_items_path(id: line_item.id, place: 'line_items'), class: 'btn btn-default', data: { method: :post } do
-              = fa_icon "plus"
-        .clearfix
-
+      .col-md-4
+        .list-group
+          .list-group-item
+            %span.text-danger= "#{i + 1}"
+            \|
+            %span
+              %span
+                = link_to line_item.product.image.url do
+                  = image_tag line_item.product.image.url(:thumb), alt: line_item.product.title
+              %span
+                %span
+                  = line_item.product.title
+                %br
+                %span
+                  = line_item.quantity
+                  &times;
+                  = number_to_currency(line_item.price)
+                  = "= #{number_to_currency(line_item.total_price)}"
+                  %span.btn.btn-group
+                    = link_to line_item_path(id: line_item.id, place: 'line_items'), class: 'btn btn-default', data: { method: :delete, confirm: 'Вы уверены?' } do
+                      = fa_icon "minus"
+                    = link_to line_items_path(id: line_item.id, place: 'line_items'), class: 'btn btn-default', data: { method: :post } do
+                      = fa_icon "plus"
 .br
 
 = link_to @current_order, data: { method: :delete, confirm: 'Вы точно хотите очистить корзину?' }, class: 'btn btn-primary' do
@@ -56,3 +62,4 @@
           = f.label :comment
           = f.text_field :comment, class: 'form-control'
     .actions= f.submit 'Оформить заказ', class: 'btn btn-primary'
+    -#TODO добавить крестик на удаление товара (всего)

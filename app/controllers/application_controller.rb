@@ -55,6 +55,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_order
     return @current_order if @current_order
+    return nil if @current_user && @current_user.moderator?
     if @current_user
       order = @current_user.orders.first || Order.create(user: @current_user)
       @current_order = order

@@ -9,6 +9,6 @@
   %body
     = render 'navbar'
     .container
-      = show_order(@current_order) if @current_order && (@current_user && @current_user.user? || !@current_user) # TODO если 404 то не отображать
+      = show_order(@current_order) if @current_order && (@current_user && @current_user.user? || !@current_user) # TODO если 404 то не отображать (или js - 404 layout)
       = render 'flash_messages'
       = yield
